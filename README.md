@@ -72,10 +72,10 @@ docker run \
   -e STATE="GuangDong" \
   -e LOCATION="ShenZhen" \
   -e ORGANISATION="Tidying Lab." \
-  -e ISSUER_CN="J R R Tolkien" \
+  -e ISSUER_CN="Authentication Center" \
   -e PUBLIC_CN="tidying.org" \
-  -e ISSUER_NAME="tolkien" \
-  -e PUBLIC_NAME="hobbit" \
+  -e ISSUER_NAME="intermediate" \
+  -e PUBLIC_NAME="public" \
   -v ./cert:/srv/cert \
   endial/openssl-alpine
 ```
