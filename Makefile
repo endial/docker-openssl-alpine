@@ -10,7 +10,7 @@ clean:
 	rm -rf ${certs_dir}; docker rm -f crt; true
 
 run: build clean
-	docker run --name crt -v ${certs_dir}:/srv/cert endial/openssl-alpine
+	docker run --name crt -v ${certs_dir}:/etc/ssl/certs endial/openssl-alpine
 
 verify: run
 	openssl x509 -in ${certs_dir}/public.crt -text -noout

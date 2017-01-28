@@ -76,7 +76,7 @@ docker run \
   -e PUBLIC_CN="tidying.org" \
   -e ISSUER_NAME="intermediate" \
   -e PUBLIC_NAME="public" \
-  -v ./cert:/srv/cert \
+  -v ./cert:/etc/ssl/certs \
   endial/openssl-alpine
 ```
 
