@@ -17,7 +17,7 @@ ENV RSA_KEY_NUMBITS "4048"
 ENV DAYS "365"
 
 # install openssl
-RUN apk update \
+RUN  apk update \
   && apk add openssl \
   && rm -rf /var/cache/apk/*
 
@@ -26,7 +26,7 @@ ENV CERT_DIR "/etc/ssl/certs"
 VOLUME ["$CERT_DIR"]
 
 COPY *.ext /
-COPY entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /
 
 ENTRYPOINT ["/entrypoint.sh"]
 
