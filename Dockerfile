@@ -22,8 +22,8 @@ RUN  apk update \
   && rm -rf /var/cache/apk/*
 
 # certificate directories
-ENV CERT_DIR "/etc/ssl/certs"
-VOLUME ["$CERT_DIR"]
+ENV CERT_DIR "/srv/cert/selfcert"
+VOLUME ["/srv/cert"]
 
 COPY *.ext /
 COPY entrypoint.sh /
