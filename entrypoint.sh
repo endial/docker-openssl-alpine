@@ -5,8 +5,9 @@
 echo "[i] Start OpenSSL, cert file save path: $CERT_DIR"
 SUBJ="/C=$COUNTY/ST=$STATE/L=$LOCATION/O=$ORGANISATION"
 
-if [ ! -d $CERT_DIR]; then
-  mkdir -p $CERT_DIR
+if [ ! -d $CERT_DIR ]; then
+  echo "[i] Make directory: $CERT_DIR"
+  mkdir -p "$CERT_DIR"
 fi
 
 if [ ! -f "$CERT_DIR/$ROOT_NAME.crt" ]
