@@ -1,49 +1,45 @@
 # OpenSSL Alpine
-
 基于 Alpine 系统的 Docker 镜像，使用 OpenSSL 工具生成三层（根证书、中间证书、终端证书）相关的 x.509 协议的自签名证书链。
 
 x509 是一个用来管理数字证书的公钥构架 ( PKI: public key infrastructure )，包括数字证书、公钥加密和传输层安全（TLS）协议，用与 WEB 和 email 通讯的数据加密。
 
 x.509 是一种非常通用的证书格式。所有的证书都符合 ITU-T x.509 国际标准，因此(理论上)为一种应用创建的证书可以用于任何其他符合 x.509 标准的应用。
 
-## 基本信息
 
+
+## 基本信息
 * 镜像地址：endial/openssl-alpine
-* 依赖镜像：endial/base-alpine
+* 依赖镜像：endial/base-alpine:v3.6
+
+
 
 
 ## 数据卷
-
 ```
 /srv/cert			# 用于存储生成的自签名证书，在子目录 selfcert 中
 ```
 
+说明：目录`/srv/cert/letsencrypt`目录中为生成的仿Let's Encrypt形式的证书文件。
+
 
 
 ## 使用说明
-
 可以使用 Linux 系统的 make 工具，按照 Makefiles 描述，生成相关的 Docker 镜像及容器。
 
 ### 编译生成镜像
-
 在 Dockerfile 所在目录，使用以下命令生成一个本地镜像:
-
 ```
 make build
 ```
 
 ### 运行容器
-
 本意本地镜像后，可以使用以下命令生成相关的证书:
-
 ```
 make run
 ```
 
 ### 验证证书
-
 使用如下命令，运行一个容器，并检测生成的响应证书信息:
-
 ```
 make verify
 ```
@@ -51,9 +47,7 @@ make verify
 
 
 ## 证书信息定制
-
 可以通过覆盖以下参数的默认值，来定制生成包含自己所需信息的证书:
-
 | VARIABLE        | DESCRIPTION      | DEFAULT               |
 | :-------------- | :--------------- | :-------------------- |
 | COUNTY          | 证书主题 - 国家        | CN                    |
@@ -72,7 +66,6 @@ make verify
 例如:
 
 在当前路径下的 cert 子目录中，生成相关证书：
-
 ```
 docker run \
   -e COUNTY="CN" \
@@ -83,18 +76,16 @@ docker run \
   -e PUBLIC_CN="tidying.org" \
   -e ISSUER_NAME="intermediate" \
   -e PUBLIC_NAME="public" \
-  -v ./cert:/etc/ssl/certs \
+  -v 'pwd'/cert:/srv/cert \
   endial/openssl-alpine
 ```
 
 显示生成的证书:
-
 ```
-ls -la ./cert
+ls -la `pwd`/cert
 ```
 
 显示公开证书的详细信息:
-
 ```
-openssl x509 -in ./cert/hobbit.crt -text -noout
+openssl x509 -text -noout -in `pwd`/cert/ca.pem
 ```

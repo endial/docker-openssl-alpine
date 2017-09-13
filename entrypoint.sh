@@ -113,5 +113,21 @@ then
   cat "$CERT_DIR/$ISSUER_NAME.crt" "$CERT_DIR/$ROOT_NAME.crt" > "$CERT_DIR/ca.pem"
 fi
 
+echo "[i] Generate Let\'s Encrypt like files"
+mkdir -p "$CERT_DIR/letsencrypt"
+cat "$CERT_DIR/$PUBLIC_NAME.key" > "$CERT_DIR/letsencrypt/privkey.pem"
+cat "$CERT_DIR/$PUBLIC_NAME.crt" "$CERT_DIR/ca.pem" > "$CERT_DIR/letsencrypt/fullchain.pem"
+cat "$CERT_DIR/ca.pem" > "$CERT_DIR/letsencrypt/chain.pem"
+cat "$CERT_DIR/$PUBLIC_NAME.crt" > "$CERT_DIR/letsencrypt/cert.pem"
+
+echo "This directory contains your keys and certificates." > "$CERT_DIR/letsencrypt/README"
+echo "" >> "$CERT_DIR/letsencrypt/README"
+echo "\`privkey.pem\`  : the private key for your certificate." >> "$CERT_DIR/letsencrypt/README"
+echo "\`fullchain.pem\`: the certificate file used in most server software." >> "$CERT_DIR/letsencrypt/README"
+echo "\`chain.pem\`    : used for OCSP stapling in Nginx >=1.3.7." >> "$CERT_DIR/letsencrypt/README"
+echo "\`cert.pem\`     : will break many server configurations, and should not be used" >> "$CERT_DIR/letsencrypt/README"
+echo "                 without reading further documentation (see link below)." >> "$CERT_DIR/letsencrypt/README"
+echo "" >> "$CERT_DIR/letsencrypt/README"
+
 # run command passed to docker run
 exec "$@"
